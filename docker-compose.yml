@@ -1,0 +1,20 @@
+version: '2'
+services:
+  tensorflow-serving:
+    image: 'bitnami/tensorflow-serving:latest'
+    labels:
+      kompose.service.type: nodeport
+    ports:
+      - 9000:9000
+    volumes:
+      - 'tensorflow_serving_data:/bitnami'
+      - '/tmp/model-data:/bitnami/model-data'
+  tensorflow-rest:
+    image: 'serving_client:latest'
+    ports:
+      - 80:80
+    depends_on:
+      - tensorflow-serving
+volumes:
+  tensorflow_serving_data:
+    driver: local
