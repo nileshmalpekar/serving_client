@@ -25,7 +25,9 @@ stub = prediction_service_pb2.beta_create_PredictionService_stub(channel)
 
 def allowed_file(filename):
   # this has changed from the original example because the original did not work for me
-  return filename[-4:].lower() in ALLOWED_EXTENSIONS
+  name, ext = os.path.splitext(filename)
+  return ext[1:].lower() in ALLOWED_EXTENSIONS
+  # return filename[-4:].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
